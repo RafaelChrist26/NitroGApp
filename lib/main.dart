@@ -49,7 +49,7 @@ class _MyHomePageState extends State<MyHomePage> {
   String getAppBarTitle() {
     switch (_selectedIndex) {
       case 0:
-        return 'UBIHARD CONNECT';
+        return 'UBISUSAH APP';
       case 1:
         return 'My Games';
       case 2:
