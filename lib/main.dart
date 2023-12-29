@@ -1,10 +1,21 @@
+import 'package:UbiSusah_APP/firebase_options.dart';
+import 'package:UbiSusah_APP/pages/readimg.dart';
+import 'package:UbiSusah_APP/pages/uploadImg_test.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:tugas_layout/pages/beranda.dart';
-import 'package:tugas_layout/pages/games.dart';
-import 'package:tugas_layout/pages/profil.dart';
-import 'package:tugas_layout/pages/store.dart';
+import 'package:UbiSusah_APP/pages/beranda.dart';
+import 'package:UbiSusah_APP/pages/games.dart';
+import 'package:UbiSusah_APP/pages/profil.dart';
+import 'package:UbiSusah_APP/pages/store.dart';
 
-void main() => runApp(MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+  options: DefaultFirebaseOptions.currentPlatform,
+);
+  runApp(MyApp());
+}
+
 
 class MyApp extends StatelessWidget {
   @override

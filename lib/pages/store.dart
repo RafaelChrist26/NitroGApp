@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:tugas_layout/pages/datagame.dart';
+import 'package:UbiSusah_APP/pages/datagame.dart';
 
-import 'package:tugas_layout/pages/detail1.dart';
+import 'package:UbiSusah_APP/pages/detail1.dart';
 import 'discount_product.dart';
 
 void main() {

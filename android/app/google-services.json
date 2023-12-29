@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "8161462488",
+    "project_id": "tubes-ubihard",
+    "storage_bucket": "tubes-ubihard.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:8161462488:android:3c24aed5af6117047b2fad",
+        "android_client_info": {
+          "package_name": "com.example.tugas_layout"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBnsyRxVD8MfWfpkFjnZqRjgfZkEEO_Pe0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

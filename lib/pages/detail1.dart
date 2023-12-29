@@ -1,6 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:tugas_layout/pages/datagame.dart';
+import 'package:UbiSusah_APP/pages/datagame.dart';
 
 class Mydetail1 extends StatefulWidget {
   final Product data;
