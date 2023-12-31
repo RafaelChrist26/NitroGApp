@@ -1,6 +1,6 @@
-
 import 'package:flutter/material.dart';
 import 'package:tugas_layout/Login/Auth/auth_service.dart';
+import 'package:tugas_layout/Login/Auth/usernamepage.dart';
 import 'package:tugas_layout/Login/Component/my_textfieldpass.dart';
 import 'package:tugas_layout/Login/Password/updatepass.dart';
 import 'package:tugas_layout/Login/Component/my_button.dart';
@@ -82,13 +82,30 @@ class LoginPage extends StatelessWidget {
                         email: emailController.text,
                         password: passwordController.text,
                       );
+
                       if (message == 'Login Success') {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => MyHomePage(),
-                          ),
-                        );
+                        // Check if the user has set up their account details in Firestore
+                        bool isAccountSetUp =
+                            await AuthService().isAccountSetUp();
+
+                        if (isAccountSetUp) {
+                          // If account details are set up, navigate to the homepage
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  MyHomePage(), // Replace with your homepage
+                            ),
+                          );
+                        } else {
+                          // If account details are not set up, navigate to the UsernamePage
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => UsernamePage(),
+                            ),
+                          );
+                        }
                       } else {
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
@@ -99,7 +116,7 @@ class LoginPage extends StatelessWidget {
                     },
                   ),
                   SizedBox(height: 50),
-                  Row(
+                  const Row(
                     children: [
                       Expanded(
                         child: Divider(
@@ -138,13 +155,29 @@ class LoginPage extends StatelessWidget {
 
                             // Jika login berhasil, pindahkan ke halaman beranda
                             if (message == 'Login Success') {
-                              Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      MyHomePage(), // Ganti dengan halaman beranda yang sesuai
-                                ),
-                              );
+                              bool isAccountSetUp =
+                                  await AuthService().isAccountSetUp();
+
+                              if (isAccountSetUp) {
+                                // If account details are set up, navigate to the homepage
+                                // ignore: use_build_context_synchronously
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        MyHomePage(), // Replace with your homepage
+                                  ),
+                                );
+                              } else {
+                                // If account details are not set up, navigate to the UsernamePage
+                                // ignore: use_build_context_synchronously
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => UsernamePage(),
+                                  ),
+                                );
+                              }
                             } else {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
@@ -159,7 +192,6 @@ class LoginPage extends StatelessWidget {
                         ),
                       ),
                       SizedBox(width: 10),
-                      
                     ],
                   ),
                   SizedBox(height: 40),

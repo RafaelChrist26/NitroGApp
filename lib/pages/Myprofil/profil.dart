@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'dart:ui';
 
@@ -11,7 +13,40 @@ class Myprofile extends StatefulWidget {
 class _MyprofileState extends State<Myprofile> {
   bool isOverviewSelected = true;
   bool isAboutSelected = false;
+  String nama = '';
+  String id = '';
   @override
+  void initState() {
+    super.initState();
+    getUserUID();
+    getUserName();
+  }
+
+  void getUserUID() {
+    final FirebaseAuth auth = FirebaseAuth.instance;
+    final User? user = auth.currentUser;
+    final uid = user!.uid;
+    setState(() {
+      id = uid;
+    });
+    print(id);
+  }
+
+  void getUserName() {
+    final docRef = FirebaseFirestore.instance.collection('users').doc(id);
+
+    docRef.get().then(
+      (DocumentSnapshot doc) {
+        final data = doc.data() as Map<String, dynamic>;
+        setState(() {
+          nama = data['name'];
+        });
+        // print(data['name']);
+      },
+      onError: (e) => print("Error getting document: $e"),
+    );
+  }
+
   Widget build(BuildContext context) {
     return Column(
       children: [
@@ -43,7 +78,7 @@ class _MyprofileState extends State<Myprofile> {
                   ),
                   SizedBox(height: 20.0), // Spasi antara gambar profil dan nama
                   Text(
-                    'NotRefrainz', // Ganti dengan nama Anda
+                    nama, // Ganti dengan nama Anda
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 22.0, // Sesuaikan ukuran teks nama

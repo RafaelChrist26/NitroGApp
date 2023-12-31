@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
@@ -10,6 +12,40 @@ class berandaku extends StatefulWidget {
 
 class _berandakuState extends State<berandaku> {
   int selectedIndex = 0; // Indeks terkait dengan tombol "Like"
+  String nama = '';
+  String id = '';
+  @override
+  void initState() {
+    super.initState();
+    getUserUID();
+    getUserName();
+  }
+
+  void getUserUID() {
+    final FirebaseAuth auth = FirebaseAuth.instance;
+    final User? user = auth.currentUser;
+    final uid = user!.uid;
+    setState(() {
+      id = uid;
+    });
+    print(id);
+  }
+
+  void getUserName() {
+    final docRef = FirebaseFirestore.instance.collection('users').doc(id);
+
+    docRef.get().then(
+      (DocumentSnapshot doc) {
+        final data = doc.data() as Map<String, dynamic>;
+        setState(() {
+          nama = data['name'];
+          
+        });
+        // print(data['name']);
+      },
+      onError: (e) => print("Error getting document: $e"),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +68,7 @@ class _berandakuState extends State<berandaku> {
               ),
               title: RichText(
                 text: TextSpan(
-                  text: 'NotRefrainz ',
+                  text: nama,
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 16 * MediaQuery.of(context).textScaleFactor,

@@ -163,7 +163,7 @@ class listviewcustom extends StatelessWidget {
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
                         ),
-                      ),  
+                      ),
                       Padding(
                         padding: EdgeInsets.only(bottom: 10),
                       ),
@@ -537,7 +537,7 @@ class gridviewcustom extends StatelessWidget {
 }
 
 class gridviewcustom2 extends StatelessWidget {
-  final List<Product> listProduct; // Properti untuk menyimpan listProduct
+  final List<Product> listProduct;
 
   gridviewcustom2({Key? key, required this.listProduct}) : super(key: key);
 
@@ -547,12 +547,11 @@ class gridviewcustom2 extends StatelessWidget {
       itemCount: listProduct.length,
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 3,
-        mainAxisSpacing: 4.0, // Spasi vertikal antara elemen grid
-        crossAxisSpacing: 4.0, // Spasi horizontal antara elemen grid
+        mainAxisSpacing: 4.0,
+        crossAxisSpacing: 4.0,
       ),
       itemBuilder: (context, index) {
         final product = listProduct[index];
-        // Ambil data produk dari listProduct
 
         return GridTile(
           child: InkWell(
@@ -564,36 +563,56 @@ class gridviewcustom2 extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    Image.asset(product.picture.toString(),
-                        fit: BoxFit.fill, height: 85),
-                    // Gambar permainan
+                    AspectRatio(
+                      aspectRatio: 1.0, // Adjust the aspect ratio as needed
+                      child: Image.asset(
+                        product.picture.toString(),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
                     Padding(
                       padding: const EdgeInsets.all(10.0),
-                      child: Container(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment
-                              .end, // Align children to the right
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Text(
-                                  product.name!, // Ganti dengan nama game
-                                  style: TextStyle(
-                                    fontSize: 14.2,
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Text(
+                                product.name!,
+                                style: TextStyle(
+                                  fontSize: 14.2,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
                                 ),
+                              ),
+                            ],
+                          ),
+                          Container(
+                            alignment: Alignment.bottomLeft,
+                            child: Column(
+                              children: [
+                                if (product.diskon! > 0)
+                                  Text(
+                                    "Offer ends 3 Nov @ 12:00am",
+                                    style: TextStyle(
+                                      color: Color.fromARGB(255, 167, 165, 165),
+                                      fontSize: 12.5,
+                                    ),
+                                  ),
                               ],
                             ),
-                            Container(
-                              alignment: Alignment.bottomLeft,
+                          ),
+                          SizedBox(height: 5),
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 7),
+                            child: Container(
+                              alignment: Alignment.topLeft,
                               child: Column(
                                 children: [
-                                  if (product.diskon! > 0)
+                                  if (product.diskon! < 1)
                                     Text(
-                                      "Offer ends 3 Nov @ 12:00am",
+                                      product.genre!,
                                       style: TextStyle(
                                         color:
                                             Color.fromARGB(255, 167, 165, 165),
@@ -603,136 +622,111 @@ class gridviewcustom2 extends StatelessWidget {
                                 ],
                               ),
                             ),
-                            SizedBox(height: 5),
-                            Padding(
-                              padding: const EdgeInsets.only(bottom: 7),
-                              child: Container(
-                                alignment: Alignment.topLeft,
-                                child: Column(
-                                  children: [
-                                    if (product.diskon! < 1)
-                                      Text(
-                                        product.genre!,
-                                        style: TextStyle(
-                                          color: Color.fromARGB(
-                                              255, 167, 165, 165),
-                                          fontSize: 12.5,
+                          ),
+                          SizedBox(height: 12),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              if (product.diskon! > 0)
+                                Container(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 10, vertical: 5),
+                                  decoration: BoxDecoration(
+                                    color: Colors.blue,
+                                    borderRadius: BorderRadius.circular(5),
+                                  ),
+                                  child: Container(
+                                    child: Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          "-",
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.bold,
+                                          ),
                                         ),
-                                      ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                            SizedBox(height: 12),
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment
-                                  .start, // Align the text to the top within the Row
-                              children: [
-                                if (product.diskon! > 0)
-                                  Container(
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: 10, vertical: 5),
-                                    decoration: BoxDecoration(
-                                      color: Colors.blue,
-                                      borderRadius: BorderRadius.circular(5),
-                                    ),
-                                    child: Container(
-                                      child: Row(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            "-",
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.bold,
-                                            ),
+                                        Text(
+                                          product.diskon.toString(),
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.bold,
                                           ),
-                                          Text(
-                                            product.diskon.toString(),
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.bold,
-                                            ),
+                                        ),
+                                        Text(
+                                          "%",
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.bold,
                                           ),
-                                          Text(
-                                            "%",
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
+                                        ),
+                                      ],
                                     ),
                                   ),
-                                Spacer(),
-                                SizedBox(
-                                    width: 53), // Add some horizontal spacing
-                                if (product.diskon! < 1) SizedBox(width: 61),
-                                Column(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  crossAxisAlignment: CrossAxisAlignment
-                                      .end, // Align the text to the left
-                                  children: [
-                                    if (product.diskon! > 0)
-                                      Container(
-                                        margin: EdgeInsets.symmetric(
-                                            horizontal: 15.0),
-                                        child: Align(
-                                          alignment: Alignment.centerRight,
-                                          child: Row(
-                                            children: [
-                                              Text(
-                                                "Rp.",
-                                                style: TextStyle(
-                                                  color: const Color.fromARGB(
-                                                      255, 255, 253, 253),
-                                                  fontSize: 12.5,
-                                                  decoration: TextDecoration
-                                                      .lineThrough,
-                                                  decorationThickness: 3.5,
-                                                  decorationColor: Colors.blue,
-                                                ),
+                                ),
+                              Spacer(),
+                              SizedBox(width: 53),
+                              if (product.diskon! < 1) SizedBox(width: 61),
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  if (product.diskon! > 0)
+                                    Container(
+                                      margin: EdgeInsets.symmetric(
+                                          horizontal: 15.0),
+                                      child: Align(
+                                        alignment: Alignment.centerRight,
+                                        child: Row(
+                                          children: [
+                                            Text(
+                                              "Rp.",
+                                              style: TextStyle(
+                                                color: const Color.fromARGB(
+                                                    255, 255, 253, 253),
+                                                fontSize: 12.5,
+                                                decoration:
+                                                    TextDecoration.lineThrough,
+                                                decorationThickness: 3.5,
+                                                decorationColor: Colors.blue,
                                               ),
-                                              Text(
-                                                product.harga.toString(),
-                                                style: TextStyle(
-                                                  color: const Color.fromARGB(
-                                                      255, 255, 253, 253),
-                                                  fontSize: 12.5,
-                                                  decoration: TextDecoration
-                                                      .lineThrough,
-                                                  decorationThickness: 3.5,
-                                                  decorationColor: Colors.blue,
-                                                ),
+                                            ),
+                                            Text(
+                                              product.harga.toString(),
+                                              style: TextStyle(
+                                                color: const Color.fromARGB(
+                                                    255, 255, 253, 253),
+                                                fontSize: 12.5,
+                                                decoration:
+                                                    TextDecoration.lineThrough,
+                                                decorationThickness: 3.5,
+                                                decorationColor: Colors.blue,
                                               ),
-                                            ],
-                                          ),
+                                            ),
+                                          ],
                                         ),
                                       ),
-                                    Text(
-                                      'Rp.${DiscountCount.mathDiscount(product.harga!, product.diskon!)}',
-                                      style: TextStyle(
-                                        color: const Color.fromARGB(
-                                            255, 255, 253, 253),
-                                        fontSize: 15,
-                                        decorationThickness: 3.5,
-                                        decorationColor: Colors.blue,
-                                        fontWeight: FontWeight.bold,
-                                      ),
                                     ),
-                                  ],
-                                ),
-
-                                // Add some horizontal spacing
-                              ],
-                            ),
-                          ],
-                        ),
+                                  Text(
+                                    'Rp.${DiscountCount.mathDiscount(product.harga!, product.diskon!)}',
+                                    style: TextStyle(
+                                      color: const Color.fromARGB(
+                                          255, 255, 253, 253),
+                                      fontSize: 15,
+                                      decorationThickness: 3.5,
+                                      decorationColor: Colors.blue,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ],
                       ),
                     ),
                   ],

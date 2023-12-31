@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:tugas_layout/Login/Auth/auth_service.dart';
+import 'package:tugas_layout/Login/Component/my_buttonregis.dart';
+import 'package:tugas_layout/Login/Component/my_textfieldpass.dart';
 import 'package:tugas_layout/Login/login.dart';
 import 'package:tugas_layout/Login/Component/my_button.dart';
 import 'package:tugas_layout/Login/Component/my_textfield.dart';
@@ -55,7 +57,7 @@ class RegisterPage extends StatelessWidget {
 
                   SizedBox(height: 10),
                   // Password
-                  MyTextField(
+                  MyTextFieldpass(
                     controller: passwordController,
                     hintText: "Password",
                     obscureText: true,
@@ -63,7 +65,7 @@ class RegisterPage extends StatelessWidget {
 
                   SizedBox(height: 10),
                   // Confirm Password
-                  MyTextField(
+                  MyTextFieldpass(
                     controller: confirmPasswordController,
                     hintText: "Confirm Password",
                     obscureText: true,
@@ -71,7 +73,7 @@ class RegisterPage extends StatelessWidget {
 
                   //button register
                   SizedBox(height: 20),
-                  MyButton(
+                  MyButtonRegis(
                     ontap: () async {
                       if (passwordController.text == confirmPasswordController.text) {
                         final message = await AuthService().register(

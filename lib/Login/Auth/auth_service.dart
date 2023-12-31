@@ -1,6 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -44,6 +44,25 @@ class AuthService {
       throw e;
     }
   }
+
+  Future<bool> isAccountSetUp() async {
+  try {
+    final currentUser = FirebaseAuth.instance.currentUser;
+    if (currentUser != null) {
+      final userDoc = FirebaseFirestore.instance.collection('users').doc(currentUser.uid);
+
+      final userDocSnapshot = await userDoc.get();
+
+      // Check if the document exists and if it contains any data
+      return userDocSnapshot.exists && userDocSnapshot.data() != null;
+    }
+  } catch (e) {
+    print("Error checking if account is set up: $e");
+  }
+
+  // Default to false if an error occurs
+  return false;
+}
 
 // // Fungsi untuk mengirim email pengaturan ulang kata sandi
 //   Future<String?> resetPassword({required String email}) async {
