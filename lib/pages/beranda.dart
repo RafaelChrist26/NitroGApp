@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:tugas_layout/pages/formDataUpload.dart';
 
 class berandaku extends StatefulWidget {
   const berandaku({super.key});
@@ -39,7 +40,6 @@ class _berandakuState extends State<berandaku> {
         final data = doc.data() as Map<String, dynamic>;
         setState(() {
           nama = data['name'];
-          
         });
         // print(data['name']);
       },
@@ -60,52 +60,61 @@ class _berandakuState extends State<berandaku> {
               borderRadius: BorderRadius.all(Radius.circular(10.0)),
             ),
             margin: EdgeInsets.symmetric(horizontal: 10.0),
-            child: ListTile(
-              leading: CircleAvatar(
-                maxRadius: 30,
-                backgroundColor: const Color.fromARGB(255, 211, 210, 207),
-                backgroundImage: AssetImage("lib/icons/zeta.png"),
-              ),
-              title: RichText(
-                text: TextSpan(
-                  text: nama,
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16 * MediaQuery.of(context).textScaleFactor,
-                    color: Colors.white,
+            child: InkWell(
+              onTap: () {
+                // Pindah ke halaman lain atau lakukan tindakan lain saat Card diklik
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => UploadTes()),
+                );
+              },
+              child: ListTile(
+                leading: CircleAvatar(
+                  maxRadius: 30,
+                  backgroundColor: const Color.fromARGB(255, 211, 210, 207),
+                  backgroundImage: AssetImage("lib/icons/zeta.png"),
+                ),
+                title: RichText(
+                  text: TextSpan(
+                    text: nama,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16 * MediaQuery.of(context).textScaleFactor,
+                      color: Colors.white,
+                    ),
+                    children: <TextSpan>[
+                      TextSpan(
+                        text: '',
+                        style: TextStyle(
+                          fontWeight: FontWeight.normal,
+                        ),
+                      ),
+                    ],
                   ),
-                  children: <TextSpan>[
-                    TextSpan(
-                      text: '',
+                ),
+                subtitle: Row(
+                  children: [
+                    Text(
+                      "Level 999",
                       style: TextStyle(
-                        fontWeight: FontWeight.normal,
+                        color: Colors.white,
+                      ),
+                    ),
+                    SizedBox(width: 10),
+                    Image.asset(
+                      "lib/icons/coin.png",
+                      width: 20 * MediaQuery.of(context).textScaleFactor,
+                      height: 20 * MediaQuery.of(context).textScaleFactor,
+                    ),
+                    SizedBox(width: 5),
+                    Text(
+                      "999+",
+                      style: TextStyle(
+                        color: Colors.white,
                       ),
                     ),
                   ],
                 ),
-              ),
-              subtitle: Row(
-                children: [
-                  Text(
-                    "Level 999",
-                    style: TextStyle(
-                      color: Colors.white,
-                    ),
-                  ),
-                  SizedBox(width: 10),
-                  Image.asset(
-                    "lib/icons/coin.png",
-                    width: 20 * MediaQuery.of(context).textScaleFactor,
-                    height: 20 * MediaQuery.of(context).textScaleFactor,
-                  ),
-                  SizedBox(width: 5),
-                  Text(
-                    "999+",
-                    style: TextStyle(
-                      color: Colors.white,
-                    ),
-                  ),
-                ],
               ),
             ),
           ),
