@@ -14,12 +14,17 @@ class UploadTes extends StatefulWidget {
 }
 
 class _UploadTesState extends State<UploadTes> {
-   final ImagePicker _imagePicker = ImagePicker();
+  final ImagePicker _imagePicker = ImagePicker();
   List<String> _imageUrls = [];
+  List<String> _os = [];
   TextEditingController _gameTitleController = TextEditingController();
   TextEditingController _gameHargaController = TextEditingController();
   TextEditingController _gameGenreController = TextEditingController();
   TextEditingController _gameDiskonController = TextEditingController();
+  TextEditingController _gameDeveloperController = TextEditingController();
+  TextEditingController _gamePubliserController = TextEditingController();
+  TextEditingController _gameReleasedController = TextEditingController();
+  TextEditingController _gameDescriptionController = TextEditingController();
 
   // Mendapatkan referensi ke instance Firebase Authentication
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -53,13 +58,33 @@ class _UploadTesState extends State<UploadTes> {
               ),
               SizedBox(height: 10),
               TextField(
+                controller: _gameDeveloperController,
+                decoration: InputDecoration(labelText: 'Developer Game'),
+              ),
+              SizedBox(height: 10),
+              TextField(
+                controller: _gamePubliserController,
+                decoration: InputDecoration(labelText: 'Publiser Game'),
+              ),
+              SizedBox(height: 10),
+              TextField(
+                controller: _gameReleasedController,
+                decoration: InputDecoration(labelText: 'Released Game'),
+              ),
+              SizedBox(height: 10),
+              TextField(
+                controller: _gameDescriptionController,
+                decoration: InputDecoration(labelText: 'Description Game'),
+              ),
+              SizedBox(height: 10),
+              TextField(
                 controller: _gameDiskonController,
                 decoration: InputDecoration(labelText: 'Diskon Game'),
               ),
               SizedBox(height: 20),
               ElevatedButton(
                 onPressed: _pickImage,
-                child: Text('Pilih Gambar'),
+                child: Text('Pilih Gambar Game'),
               ),
               SizedBox(height: 20),
               _imageUrls.isEmpty
@@ -68,6 +93,21 @@ class _UploadTesState extends State<UploadTes> {
                       spacing: 8.0,
                       runSpacing: 8.0,
                       children: _imageUrls
+                          .map((url) => Image.network(url,
+                              width: 100, height: 100, fit: BoxFit.cover))
+                          .toList(),
+                    ),
+              ElevatedButton(
+                onPressed: _pickImageOs,
+                child: Text('Pilih Gambar OS'),
+              ),
+              SizedBox(height: 20),
+              _os.isEmpty
+                  ? Text('Tidak ada gambar yang dipilih.')
+                  : Wrap(
+                      spacing: 8.0,
+                      runSpacing: 8.0,
+                      children: _os
                           .map((url) => Image.network(url,
                               width: 100, height: 100, fit: BoxFit.cover))
                           .toList(),
@@ -92,6 +132,32 @@ class _UploadTesState extends State<UploadTes> {
       _uploadImageToFirestore(File(pickedFile.path), documentId);
     }
   }
+  Future<void> _uploadImageDataOs() async {
+    final pickedFile = await _imagePicker.getImage(source: ImageSource.gallery);
+
+    if (pickedFile != null) {
+      String documentId = DateTime.now().millisecondsSinceEpoch.toString();
+      _uploadImageOsToFirestore(File(pickedFile.path), documentId);
+    }
+  }
+  Future<void> _uploadImageOsToFirestore(File file, String documentId) async {
+    String fileName = 'images/$documentId.jpg';
+    firebase_storage.Reference storageReference =
+        firebase_storage.FirebaseStorage.instance.ref().child(fileName);
+
+    firebase_storage.UploadTask uploadTask = storageReference.putFile(file);
+
+    firebase_storage.TaskSnapshot taskSnapshot =
+        await uploadTask.whenComplete(() => null);
+    String downloadURL = await taskSnapshot.ref.getDownloadURL();
+
+    setState(() {
+      _os.clear();
+      _os.add(downloadURL);
+    });
+
+    print('Tautan gambar diunggah ke Firestore: $downloadURL');
+  }
 
   Future<void> _uploadImageToFirestore(File file, String documentId) async {
     String fileName = 'images/$documentId.jpg';
@@ -112,41 +178,56 @@ class _UploadTesState extends State<UploadTes> {
     print('Tautan gambar diunggah ke Firestore: $downloadURL');
   }
 
+  Future<void> _pickImageOs() async {
+    await _uploadImageDataOs();
+  }
+
   Future<void> _pickImage() async {
     await _uploadImageData();
   }
 
   Future<void> _uploadGameDataAndImage() async {
-  User? user = _auth.currentUser;
-  if (user != null) {
-    String documentId = DateTime.now().millisecondsSinceEpoch.toString();
+    User? user = _auth.currentUser;
+    if (user != null) {
+      String documentId = DateTime.now().millisecondsSinceEpoch.toString();
 
-    String gameTitle = _gameTitleController.text.trim();
-    String gameHarga = _gameHargaController.text.trim();
-    String gameGenre = _gameGenreController.text.trim();
-    String gameDiskon = _gameDiskonController.text.trim();
+      String gameTitle = _gameTitleController.text.trim();
+      int gameHarga = int.tryParse(_gameHargaController.text.trim()) ?? 0;
+      String gameGenre = _gameGenreController.text.trim();
+      String gameDeveloper = _gameDeveloperController.text.trim();
+      String gamePubliser = _gamePubliserController.text.trim();
+      String gameReleased = _gameReleasedController.text.trim();
+      String gameDescription = _gameDescriptionController.text.trim();
+      int gameDiskon = int.tryParse(_gameDiskonController.text.trim()) ?? 0;
 
-    await FirebaseFirestore.instance.collection('stores').add(
-      {
-        'documentId': documentId, // Tambahkan ID dokumen
-        'gameTitle': gameTitle,
-        'gameHarga': gameHarga,
-        'gameGenre': gameGenre,
-        'gameDiskon': gameDiskon,
-        'imageUrl': _imageUrls.isNotEmpty ? _imageUrls.first : null,
-      },
-    );
+      await FirebaseFirestore.instance.collection('stores').add(
+        {
+          'documentId': documentId, // Tambahkan ID dokumen
+          'gameTitle': gameTitle,
+          'gameHarga': gameHarga,
+          'gameGenre': gameGenre,
+          'gameDeveloper': gameDeveloper,
+          'gamePubliser': gamePubliser,
+          'gameReleased': gameReleased,
+          'gameDescription': gameDescription,
+          'gameDiskon': gameDiskon,
+          'imageUrl': _imageUrls.isNotEmpty ? _imageUrls.first : null,
+          'os': _os.isNotEmpty ? _os.first : null,
+        },
+      );
 
-    print('Data game dan gambar diunggah ke Firestore untuk dokumen baru: $documentId');
+      print(
+          'Data game dan gambar diunggah ke Firestore untuk dokumen baru: $documentId');
 
-    _gameTitleController.clear();
-    _gameHargaController.clear();
-    _gameGenreController.clear();
-    _gameDiskonController.clear();
+      _gameTitleController.clear();
+      _gameHargaController.clear();
+      _gameGenreController.clear();
+      _gameDiskonController.clear();
 
-    setState(() {
-      _imageUrls.clear();
-    });
+      setState(() {
+        _imageUrls.clear();
+        _os.clear();
+      });
+    }
   }
-}
 }
