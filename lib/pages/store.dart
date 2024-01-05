@@ -7,28 +7,6 @@ import 'package:tugas_layout/pages/detail1.dart';
 import 'package:tugas_layout/pages/formDataUpload.dart';
 import 'discount_product.dart';
 
-class Game {
-  final String? name;
-  final String? picture;
-  final String? os;
-  final int? diskon;
-  final int? harga;
-  final String? genre;
-  final String? genre2;
-  final String? genre3;
-
-  Game({
-    this.name,
-    this.picture,
-    this.os,
-    this.diskon,
-    this.harga,
-    this.genre,
-    this.genre2,
-    this.genre3,
-  });
-}
-
 class Mystore extends StatefulWidget {
   const Mystore({super.key});
 
@@ -39,44 +17,6 @@ class Mystore extends StatefulWidget {
 class _MystoreState extends State<Mystore> {
   bool isList = true;
 
-  void ChangeView(bool isList) {
-    setState(() {
-      this.isList = !isList;
-    });
-  }
-
-  Future<List<Map<String, dynamic>>> _getFirestoreData() async {
-    try {
-      QuerySnapshot querySnapshot =
-          await FirebaseFirestore.instance.collection('stores').get();
-
-      List<Map<String, dynamic>> firestoreData = [];
-
-      for (QueryDocumentSnapshot documentSnapshot in querySnapshot.docs) {
-        Map<String, dynamic> data =
-            documentSnapshot.data() as Map<String, dynamic>;
-
-        // Add more fields based on your Firestore structure
-        firestoreData.add({
-          'documentId': documentSnapshot.id,
-          'imageUrl': data['imageUrl'],
-          'gameTitle': data['gameTitle'],
-          'os': 'pc',
-          'Gamediskon': data[''], // Add your logic for discount
-          'gameHarga':
-              data['gameHarga'], // Assuming rating is the price in this case
-          'genre': data['genre'],
-          'genre2': '',
-          'genre3': '', // Add your logic for genre3
-        });
-      }
-
-      return firestoreData;
-    } catch (error) {
-      print('Error getting Firestore data: $error');
-      return [];
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -118,7 +58,7 @@ class _MystoreState extends State<Mystore> {
                             context,
                             MaterialPageRoute(
                               builder: (context) {
-                                return UploadTes();
+                                return Mydetail1(gameId: product.id,);
                               },
                             ),
                           );

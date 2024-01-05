@@ -1,149 +1,147 @@
-// import 'package:carousel_slider/carousel_slider.dart';
-// import 'package:flutter/material.dart';
-// import 'package:tugas_layout/pages/datagame.dart';
+import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
+class Mydetail1 extends StatelessWidget {
+  final String gameId;
 
-// class Mydetail1 extends StatefulWidget {
-//   final Product data;
-//   const Mydetail1({
-//     super.key,
-//     required this.data,
-//   });
+  const Mydetail1({Key? key, required this.gameId}) : super(key: key);
 
-//   @override
-//   State<Mydetail1> createState() => _Mydetail1State();
-// }
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Game Details'),
+      ),
+      body: StreamBuilder(
+        stream: FirebaseFirestore.instance.collection('stores').doc(gameId).snapshots(),
+        builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          } else if (snapshot.hasError || !snapshot.hasData || snapshot.data == null) {
+            return const Center(
+              child: Text('Error loading game details'),
+            );
+          } else {
+            var gameData = snapshot.data!;
 
-// class _Mydetail1State extends State<Mydetail1> {
-//   @override
-//   Widget build(BuildContext context) {
-//     return ListView(
-//       children: [
-//         Column(
-//           children: [
-//             SizedBox(height: 15),
-//             Container(
-//               margin: EdgeInsets.only(left: 10, top: 8, right: 10, bottom: 8),
-//               child: Align(
-//                 alignment: Alignment.topLeft,
-//                 child: Column(
-//                   crossAxisAlignment: CrossAxisAlignment.start,
-//                   children: [
-//                     Image.asset("${widget.data.picture}"),
-//                     SizedBox(height: 20),
-//                     Text(
-//                       widget.data.name!,
-//                       style: TextStyle(
-//                         color: Colors.white,
-//                         fontSize: 26,
-//                         fontWeight: FontWeight.bold,
-//                         fontFamily: 'Arial',
-//                         decoration: TextDecoration.none, // Menghapus underline
-//                       ),
-//                     ),
-//                     SizedBox(height: 20),
-//                     Row(
-//                       children: [
-//                         Text(
-//                           "Developer ",
-//                           style: TextStyle(
-//                             color: const Color.fromARGB(255, 134, 132, 132),
-//                             fontSize: 18,
-//                             fontWeight: FontWeight.bold,
-//                             fontFamily: 'Arial',
-//                             decoration:
-//                                 TextDecoration.none, // Menghapus underline
-//                           ),
-//                         ),
-//                         Text(
-//                           "${widget.data.developer!}",
-//                           style: TextStyle(
-//                             color: Colors.blue,
-//                             fontSize: 18,
-//                             fontWeight: FontWeight.bold,
-//                             fontFamily: 'Arial',
-//                             decoration:
-//                                 TextDecoration.none, // Menghapus underline
-//                           ),
-//                         ),
-//                       ],
-//                     ),
-//                     SizedBox(height: 10.5),
-//                     Row(
-//                       children: [
-//                         Text(
-//                           "Publisher ",
-//                           style: TextStyle(
-//                             color: const Color.fromARGB(255, 134, 132, 132),
-//                             fontSize: 18,
-//                             fontWeight: FontWeight.bold,
-//                             fontFamily: 'Arial',
-//                             decoration:
-//                                 TextDecoration.none, // Menghapus underline
-//                           ),
-//                         ),
-//                         SizedBox(width: 5),
-//                         Text(
-//                           "${widget.data.publisher!}",
-//                           style: TextStyle(
-//                             color: Colors.blue,
-//                             fontSize: 18,
-//                             fontWeight: FontWeight.bold,
-//                             fontFamily: 'Arial',
-//                             decoration:
-//                                 TextDecoration.none, // Menghapus underline
-//                           ),
-//                         ),
-//                       ],
-//                     ),
-//                     SizedBox(height: 10.5),
-//                     Row(
-//                       children: [
-//                         Text(
-//                           "Released ",
-//                           style: TextStyle(
-//                             color: const Color.fromARGB(255, 134, 132, 132),
-//                             fontSize: 18,
-//                             fontWeight: FontWeight.bold,
-//                             fontFamily: 'Arial',
-//                             decoration:
-//                                 TextDecoration.none, // Menghapus underline
-//                           ),
-//                         ),
-//                         SizedBox(width: 9),
-//                         Text(
-//                           "${widget.data.released!}",
-//                           style: TextStyle(
-//                             color: Colors.blue,
-//                             fontSize: 18,
-//                             fontWeight: FontWeight.bold,
-//                             fontFamily: 'Arial',
-//                             decoration:
-//                                 TextDecoration.none, // Menghapus underline
-//                           ),
-//                         ),
-//                       ],
-//                     ),
-//                     SizedBox(height: 25),
-//                     Text(
-//                       "${widget.data.description!}",
-//                       style: TextStyle(
-//                         color: Color.fromARGB(255, 255, 254, 254),
-//                         fontSize: 18,
-//                         fontWeight: FontWeight.normal,
-//                         fontFamily: 'Arial',
-//                         decoration: TextDecoration.none, // Menghapus underline
-//                       ),
-//                     ),
-//                   ],
-//                 ),
-//               ),
-//             ),
-//             SizedBox(height: 10),
-//           ],
-//         ),
-//       ],
-//     );
-//     // Ambil data produk dari listProduct(
-//   }
-// }
+            return SingleChildScrollView(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Image.network(
+                    gameData['imageUrl'],
+                    width: MediaQuery.of(context).size.width,
+                    height: 200,
+                    fit: BoxFit.cover,
+                  ),
+                  const SizedBox(height: 16.0),
+                  Text(
+                    gameData['gameTitle'],
+                    style: const TextStyle(
+                      fontSize: 26.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 8.0),
+                  Text(
+                    'Genre: ${gameData['gameGenre']}',
+                    style: const TextStyle(
+                      fontSize: 18.0,
+                      color: Colors.grey,
+                    ),
+                  ),
+                  const SizedBox(height: 8.0),
+                  Text(
+                    'Original Price: Rp.${gameData['gameHarga']}',
+                    style: const TextStyle(
+                      fontSize: 18.0,
+                      color: Colors.grey,
+                    ),
+                  ),
+                  const SizedBox(height: 8.0),
+                  if (gameData['gameDiskon'] > 0)
+                    Text(
+                      'Discount: ${gameData['gameDiskon']}%',
+                      style: const TextStyle(
+                        fontSize: 18.0,
+                        color: Colors.grey,
+                      ),
+                    ),
+                  const SizedBox(height: 8.0),
+                  Row(
+                    children: [
+                      const Text(
+                        "Developer: ",
+                        style: TextStyle(
+                          fontSize: 18.0,
+                          color: Color.fromARGB(255, 134, 132, 132),
+                        ),
+                      ),
+                      Text(
+                        "${gameData['gameDeveloper']}",
+                        style: const TextStyle(
+                          fontSize: 18.0,
+                          color: Colors.blue,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 8.0),
+                  Row(
+                    children: [
+                      const Text(
+                        "Publisher: ",
+                        style: TextStyle(
+                          fontSize: 18.0,
+                          color: Color.fromRGBO(134, 132, 132, 1),
+                        ),
+                      ),
+                      Text(
+                        "${gameData['gamePubliser']}",
+                        style: const TextStyle(
+                          fontSize: 18.0,
+                          color: Colors.blue,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 8.0),
+                  Row(
+                    children: [
+                      const Text(
+                        "Released: ",
+                        style: TextStyle(
+                          fontSize: 18.0,
+                          color: Color.fromARGB(255, 134, 132, 132),
+                        ),
+                      ),
+                      Text(
+                        "${gameData['gameReleased']}",
+                        style: const TextStyle(
+                          fontSize: 18.0,
+                          color: Colors.blue,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 25.0),
+                  Text(
+                    "${gameData['gameDescription']}",
+                    style: const TextStyle(
+                      color: Color.fromARGB(255, 255, 254, 254),
+                      fontSize: 18,
+                      fontWeight: FontWeight.normal,
+                    ),
+                  ),
+                ],
+              ),
+            );
+          }
+        },
+      ),
+    );
+  }
+}
