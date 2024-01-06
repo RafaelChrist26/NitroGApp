@@ -1,10 +1,47 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:tugas_layout/pages/checkout.dart';
+import 'package:tugas_layout/pages/discount_product.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class Mydetail1 extends StatelessWidget {
   final String gameId;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  const Mydetail1({Key? key, required this.gameId}) : super(key: key);
+  Mydetail1({Key? key, required this.gameId}) : super(key: key);
+
+  Future<void> _addToCart(String gameId) async {
+  try {
+    User? user = _auth.currentUser;
+    if (user != null) {
+      // Get the current user's ID
+      String userId = user.uid;
+
+      // Add a new document to the user's "cart" collection with gameId as the document ID
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(userId)
+          .collection('cart')
+          .doc(gameId) // Use gameId as the document ID
+          .set({
+        'gameId': gameId,
+        'purchaseDate': FieldValue.serverTimestamp(),
+        // Add other relevant data
+      });
+
+      // You can also show a success message or navigate to a success screen
+      print('Item added to cart successfully!');
+    } else {
+      // Handle the case when the user is not logged in
+      print('User not logged in');
+    }
+  } catch (e) {
+    // Handle errors
+    print('Error adding item to cart: $e');
+  }
+}
+
 
   @override
   Widget build(BuildContext context) {
@@ -13,13 +50,18 @@ class Mydetail1 extends StatelessWidget {
         title: const Text('Game Details'),
       ),
       body: StreamBuilder(
-        stream: FirebaseFirestore.instance.collection('stores').doc(gameId).snapshots(),
+        stream: FirebaseFirestore.instance
+            .collection('stores')
+            .doc(gameId)
+            .snapshots(),
         builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(
               child: CircularProgressIndicator(),
             );
-          } else if (snapshot.hasError || !snapshot.hasData || snapshot.data == null) {
+          } else if (snapshot.hasError ||
+              !snapshot.hasData ||
+              snapshot.data == null) {
             return const Center(
               child: Text('Error loading game details'),
             );
@@ -55,7 +97,7 @@ class Mydetail1 extends StatelessWidget {
                   ),
                   const SizedBox(height: 8.0),
                   Text(
-                    'Original Price: Rp.${gameData['gameHarga']}',
+                    'Price : Rp.${DiscountCount.mathDiscount(gameData['gameHarga'], gameData['gameDiskon'])}',
                     style: const TextStyle(
                       fontSize: 18.0,
                       color: Colors.grey,
@@ -134,6 +176,21 @@ class Mydetail1 extends StatelessWidget {
                       color: Color.fromARGB(255, 255, 254, 254),
                       fontSize: 18,
                       fontWeight: FontWeight.normal,
+                    ),
+                  ),
+                  const SizedBox(height: 16.0),
+                  Center(
+                    child: ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => CheckoutPage(gameId: gameId,)),
+                        );
+                              _addToCart(gameId);
+                        
+                      },
+                      child: const Text('Add to Chart'),
                     ),
                   ),
                 ],

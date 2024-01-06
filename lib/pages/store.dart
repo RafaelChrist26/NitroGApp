@@ -1,10 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:carousel_slider/carousel_slider.dart';
-import 'package:tugas_layout/pages/datagame.dart';
-
 import 'package:tugas_layout/pages/detail1.dart';
-import 'package:tugas_layout/pages/formDataUpload.dart';
 import 'discount_product.dart';
 
 class Mystore extends StatefulWidget {
@@ -22,7 +18,7 @@ class _MystoreState extends State<Mystore> {
   Widget build(BuildContext context) {
     
     return Container(
-      margin: EdgeInsets.only(left: 10, top: 30, right: 10, bottom: 8),
+      margin: const EdgeInsets.only(left: 10, top: 30, right: 10, bottom: 8),
       child: Column(
         
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -35,7 +31,7 @@ class _MystoreState extends State<Mystore> {
               fontWeight: FontWeight.bold,
             ),
           ),
-          SizedBox(height: 15),
+          const SizedBox(height: 15),
           Expanded(
             child: StreamBuilder(
               stream: FirebaseFirestore.instance.collection('stores').snapshots(),
@@ -66,9 +62,9 @@ class _MystoreState extends State<Mystore> {
                         child: Ink(
                           color: const Color.fromARGB(0, 136, 129, 129),
                           child: Container(
-                            margin: EdgeInsets.only(bottom: 10),
-                            padding: EdgeInsets.all(7),
-                            decoration: BoxDecoration(
+                            margin: const EdgeInsets.only(bottom: 10),
+                            padding: const EdgeInsets.all(7),
+                            decoration: const BoxDecoration(
                               color: Color.fromARGB(255, 45, 46, 46),
                             ),
                             child: Row(
@@ -81,7 +77,7 @@ class _MystoreState extends State<Mystore> {
                                       : 120,
                                   height: 80,
                                 ),
-                                SizedBox(width: 20),
+                                const SizedBox(width: 20),
                                 Expanded(
                                   child: Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -120,7 +116,7 @@ class _MystoreState extends State<Mystore> {
                                                 children: [
                                                   Text(
                                                     "-${product['gameDiskon']}%",
-                                                    style: TextStyle(
+                                                    style: const TextStyle(
                                                       color: Colors.white,
                                                       fontSize: 14,
                                                       fontWeight: FontWeight.bold,
@@ -136,8 +132,8 @@ class _MystoreState extends State<Mystore> {
                                             children: [
                                               Text(
                                                 'Rp.${DiscountCount.mathDiscount(product['gameHarga'], product['gameDiskon'])}',
-                                                style: TextStyle(
-                                                  color: const Color.fromARGB(
+                                                style: const TextStyle(
+                                                  color: Color.fromARGB(
                                                       255, 255, 253, 253),
                                                   fontSize: 15,
                                                   decorationThickness: 3.5,
