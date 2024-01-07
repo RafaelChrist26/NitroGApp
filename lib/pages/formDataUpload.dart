@@ -352,6 +352,20 @@ class _UploadTesState extends State<UploadTes> {
         _imageUrls.clear();
         _osOptions.forEach((osOption) => osOption.selected = false);
       });
+
+      // Show a notification
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Game successfully added!'),
+          duration: Duration(seconds: 3),
+          action: SnackBarAction(
+            label: 'Dismiss',
+            onPressed: () {
+              // You can add functionality here to undo or navigate to another screen
+            },
+          ),
+        ),
+      );
     }
   }
 }

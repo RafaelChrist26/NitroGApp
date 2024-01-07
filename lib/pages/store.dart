@@ -138,42 +138,40 @@ class _MystoreState extends State<Mystore> {
                                                 CrossAxisAlignment.start,
                                             children: [
                                               if (product['gameDiskon'] > 0)
-                                              Text(
-                                                'Rp.${product['gameHarga']}',
-                                                style: const TextStyle(
-                                                  color: Color.fromARGB(
-                                                      255, 255, 253, 253),
-                                                  fontSize: 15,
-                                                  decorationThickness: 6.5,
-                                                  decorationColor:
-                                                      Color.fromARGB(
-                                                          255, 9, 152, 218),
-                                                  fontWeight: FontWeight.bold,
-                                                  decoration: TextDecoration
-                                                      .lineThrough,
+                                                Text(
+                                                  'Rp.${product['gameHarga']}',
+                                                  style: const TextStyle(
+                                                    color: Color.fromARGB(
+                                                        255, 255, 253, 253),
+                                                    fontSize: 15,
+                                                    decorationThickness: 6.5,
+                                                    decorationColor:
+                                                        Color.fromARGB(
+                                                            255, 9, 152, 218),
+                                                    fontWeight: FontWeight.bold,
+                                                    decoration: TextDecoration
+                                                        .lineThrough,
+                                                  ),
+                                                  textAlign: TextAlign
+                                                      .right, // Align to the right
                                                 ),
-                                                textAlign: TextAlign
-                                                    .right, // Align to the right
-                                              ),
                                               if (product['gameDiskon'] < 0)
-                                              Text(
-                                                'Rp.${product['gameHarga']}',
-                                                style: const TextStyle(
-                                                  color: Color.fromARGB(
-                                                      255, 255, 253, 253),
-                                                  fontSize: 15,
-                                                  decorationThickness: 6.5,
-                                                  decorationColor:
-                                                      Color.fromARGB(
-                                                          255, 9, 152, 218),
-                                                  fontWeight: FontWeight.bold,
-                                                  
+                                                Text(
+                                                  'Rp.${product['gameHarga']}',
+                                                  style: const TextStyle(
+                                                    color: Color.fromARGB(
+                                                        255, 255, 253, 253),
+                                                    fontSize: 15,
+                                                    decorationThickness: 6.5,
+                                                    decorationColor:
+                                                        Color.fromARGB(
+                                                            255, 9, 152, 218),
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                  textAlign: TextAlign
+                                                      .right, // Align to the right
                                                 ),
-                                                textAlign: TextAlign
-                                                    .right, // Align to the right
-                                              ),
                                               Text(
-                                                
                                                 'Rp.${DiscountCount.mathDiscount(product['gameHarga'], product['gameDiskon'])}',
                                                 style: const TextStyle(
                                                   color: Color.fromARGB(
@@ -193,16 +191,22 @@ class _MystoreState extends State<Mystore> {
                                       const SizedBox(height: 10),
                                       Row(
                                         children: [
-                                          Text(
-                                            product['gameGenre'],
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: MediaQuery.of(context)
-                                                          .size
-                                                          .width >
-                                                      600
-                                                  ? 16
-                                                  : 14,
+                                          Expanded(
+                                            child: Text(
+                                              product['gameGenre'],
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: MediaQuery.of(context)
+                                                            .size
+                                                            .width >
+                                                        600
+                                                    ? 16
+                                                    : 14,
+                                              ),
+                                              maxLines:
+                                                  2, // Set the maximum number of lines
+                                              overflow: TextOverflow
+                                                  .ellipsis, // Use ellipsis for overflow
                                             ),
                                           ),
                                         ],
