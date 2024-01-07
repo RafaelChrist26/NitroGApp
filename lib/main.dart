@@ -1,3 +1,5 @@
+import 'package:badges/badges.dart' as badges;
+import 'package:badges/badges.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -7,6 +9,7 @@ import 'package:tugas_layout/Login/login.dart';
 import 'package:tugas_layout/firebase_options.dart';
 import 'package:tugas_layout/pages/Myprofil/settingpage.dart';
 import 'package:tugas_layout/pages/beranda.dart';
+import 'package:tugas_layout/pages/checkout.dart';
 import 'package:tugas_layout/pages/games.dart';
 import 'package:tugas_layout/pages/Myprofil/profil.dart';
 import 'package:tugas_layout/pages/store.dart';
@@ -18,6 +21,8 @@ void main() async {
   );
   runApp(MyApp());
 }
+
+final FirebaseAuth _auth = FirebaseAuth.instance;
 
 class MyApp extends StatelessWidget {
   @override
@@ -34,7 +39,7 @@ class MyApp extends StatelessWidget {
         '/home': (context) => MyHomePage(),
         '/settings': (context) =>
             SettingPage(), // Tambahkan rute untuk SettingsPage
-            '/profile': (context) => Myprofile(), // Add this line
+        '/profile': (context) => Myprofile(), // Add this line
         // Add routes for other pages if needed
       },
     );
@@ -118,6 +123,111 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
+  void _handleCheckoutNavigation(BuildContext context) async {
+    // Ambil gameId dari Firebase
+    String? gameId = await fetchGameIdFromFirebase(context);
+
+    if (gameId != null) {
+      // Navigasi ke halaman checkout dengan membawa gameId
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => CheckoutPage(gameId: gameId),
+        ),
+      );
+    } else {
+      // Handle jika gameId null atau tidak ditemukan
+      print('Error: GameId not found or null');
+    }
+  }
+
+  Future<String?> fetchGameIdFromFirebase(BuildContext context) async {
+    try {
+      User? user = _auth.currentUser;
+      if (user != null) {
+        String userId = user.uid;
+
+        // Ganti 'users' dengan nama koleksi yang sesuai di Firestore
+        QuerySnapshot purchaseSnapshot = await FirebaseFirestore.instance
+            .collection('users')
+            .doc(userId)
+            .collection('cart')
+            .get();
+
+        if (purchaseSnapshot.docs.isNotEmpty) {
+          // Ambil gameId dari dokumen pertama di koleksi 'cart'
+          String gameId = purchaseSnapshot.docs.first.get('gameId').toString();
+          return gameId;
+        } else {
+          // Kembalikan null jika tidak ada dokumen di koleksi 'cart'
+          return null;
+        }
+      } else {
+        // Handle jika user null
+        print('Error: User not logged in');
+        return null;
+      }
+    } catch (e) {
+      // Handle kesalahan jika terjadi
+      print('Error fetching gameId: $e');
+      return null;
+    }
+  }
+
+  Future<bool> hasGamesInCart() async {
+    try {
+      User? user = _auth.currentUser;
+      if (user != null) {
+        String userId = user.uid;
+
+        // Ganti 'users' dengan nama koleksi yang sesuai di Firestore
+        QuerySnapshot purchaseSnapshot = await FirebaseFirestore.instance
+            .collection('users')
+            .doc(userId)
+            .collection('cart')
+            .get();
+
+        return purchaseSnapshot.docs.isNotEmpty;
+      } else {
+        // Handle jika user null
+        print('Error: User not logged in');
+        return false;
+      }
+    } catch (e) {
+      // Handle kesalahan jika terjadi
+      print('Error checking cart: $e');
+      return false;
+    }
+  }
+
+  Future<int> getCartItemCount() async {
+    try {
+      User? user = _auth.currentUser;
+      if (user != null) {
+        String userId = user.uid;
+
+        // Ganti 'users' dengan nama koleksi yang sesuai di Firestore
+        QuerySnapshot purchaseSnapshot = await FirebaseFirestore.instance
+            .collection('users')
+            .doc(userId)
+            .collection('cart')
+            .get();
+
+        setState(() {});
+
+        return purchaseSnapshot.docs.length;
+      } else {
+        // Handle jika user null
+        print('Error: User not logged in');
+        return 0;
+      }
+    } catch (e) {
+      // Handle kesalahan jika terjadi
+      print('Error counting cart items: $e');
+      return 0;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -154,12 +264,98 @@ class _MyHomePageState extends State<MyHomePage> {
           actions: [
             if (_selectedIndex == 3) // MyProfile
               IconButton(
-                icon: Icon(Icons.settings,
-                color: Colors.white),
+                icon: Icon(Icons.settings, color: Colors.white),
                 onPressed: () {
                   // Tambahkan logika logout di sini
                   // Contoh: Keluar dari akun dan kembali ke halaman login
                   Navigator.pushReplacementNamed(context, '/settings');
+                },
+              ),
+            if (_selectedIndex == 0) // MyProfile
+              FutureBuilder<int>(
+                future: getCartItemCount(),
+                builder: (context, snapshot) {
+                  int itemCount = snapshot.data ?? 0;
+
+                  if (itemCount > 0) {
+                    return badges.Badge(
+                      // Use badges.Badge to refer to the Badge widget from the badges package
+                      position: badges.BadgePosition.topEnd(top: 0, end: 0),
+                      animationType: badges.BadgeAnimationType.scale,
+                      badgeContent: Text(
+                        itemCount.toString(),
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      child: IconButton(
+                        icon: Icon(Icons.add_shopping_cart_rounded,
+                            color: Colors.white),
+                        onPressed: () async {
+                          _handleCheckoutNavigation(context);
+                        },
+                      ),
+                    );
+                  } else {
+                    return SizedBox
+                        .shrink(); // If itemCount is 0, return an empty widget to hide the icon
+                  }
+                },
+              ),
+            if (_selectedIndex == 1) // MyProfile
+              FutureBuilder<int>(
+                future: getCartItemCount(),
+                builder: (context, snapshot) {
+                  int itemCount = snapshot.data ?? 0;
+
+                  if (itemCount > 0) {
+                    return badges.Badge(
+                      // Use badges.Badge to refer to the Badge widget from the badges package
+                      position: badges.BadgePosition.topEnd(top: 0, end: 0),
+                      animationType: badges.BadgeAnimationType.scale,
+                      badgeContent: Text(
+                        itemCount.toString(),
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      child: IconButton(
+                        icon: Icon(Icons.add_shopping_cart_rounded,
+                            color: Colors.white),
+                        onPressed: () async {
+                          _handleCheckoutNavigation(context);
+                        },
+                      ),
+                    );
+                  } else {
+                    return SizedBox
+                        .shrink(); // If itemCount is 0, return an empty widget to hide the icon
+                  }
+                },
+              ),
+            if (_selectedIndex == 2) // MyProfile
+              FutureBuilder<int>(
+                future: getCartItemCount(),
+                builder: (context, snapshot) {
+                  int itemCount = snapshot.data ?? 0;
+
+                  if (itemCount > 0) {
+                    return badges.Badge(
+                      // Use badges.Badge to refer to the Badge widget from the badges package
+                      position: badges.BadgePosition.topEnd(top: 0, end: 0),
+                      animationType: badges.BadgeAnimationType.scale,
+                      badgeContent: Text(
+                        itemCount.toString(),
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      child: IconButton(
+                        icon: Icon(Icons.add_shopping_cart_rounded,
+                            color: Colors.white),
+                        onPressed: () async {
+                          _handleCheckoutNavigation(context);
+                        },
+                      ),
+                    );
+                  } else {
+                    return SizedBox
+                        .shrink(); // If itemCount is 0, return an empty widget to hide the icon
+                  }
                 },
               ),
           ],
@@ -215,7 +411,6 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             BottomNavigationBarItem(
               icon: _selectedIndex == 3
-              
                   ? CircleAvatar(
                       maxRadius: 15,
                       backgroundColor: const Color.fromARGB(255, 211, 210, 207),
