@@ -47,7 +47,33 @@ class Mydetail1 extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Game Details'),
+          title: const Text('Game Details',
+          style: TextStyle(
+            color:Colors.white,
+            fontWeight: FontWeight.bold,
+                        fontFamily: 'Aclonica',  
+          ),),
+          leading: IconButton(
+              icon: Icon(Icons.arrow_back,
+              color: Colors.white),
+              onPressed: () {
+                // Navigate back to the "Myprofile" page
+                Navigator.pushReplacementNamed(context, '/home');
+              },
+            ),
+          flexibleSpace: Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  const Color.fromARGB(255, 5, 38, 66),
+                  Color.fromARGB(255, 71, 2, 110),
+                  Color.fromARGB(255, 0, 0, 0),
+                ],
+                begin: Alignment.topLeft,
+                end: Alignment.topRight,
+              ),
+            ),
+          ),
         ),
         body: StreamBuilder(
           stream: FirebaseFirestore.instance
@@ -242,7 +268,7 @@ class Mydetail1 extends StatelessWidget {
                                 SizedBox(
                                     width:
                                         8), // Add spacing between the price and the blue container
-                                if (gameData['gameDiskon'] < 0)
+                                if (gameData['gameDiskon'] > 0)
                                   Container(
                                     padding: EdgeInsets.all(8),
                                     decoration: BoxDecoration(

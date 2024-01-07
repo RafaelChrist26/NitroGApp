@@ -40,6 +40,7 @@ class MyApp extends StatelessWidget {
         '/settings': (context) =>
             SettingPage(), // Tambahkan rute untuk SettingsPage
         '/profile': (context) => Myprofile(), // Add this line
+        '/stores': (context) => Mystore(), // Add this line
         // Add routes for other pages if needed
       },
     );

@@ -276,33 +276,93 @@ class _CheckoutPageState extends State<CheckoutPage> {
                                             Row(
                                               children: [
                                                 if (gameData['gameDiskon'] < 0)
-                                                Text(
-                                                  "Rp. ${gameData['gameHarga']}",
-                                                  style: const TextStyle(
-                                                    color: Colors.white,
-                                                    decoration: TextDecoration
-                                                        .lineThrough,
-                                                    decorationThickness: 3.0,
-                                                    decorationColor:
-                                                        Colors.blue,
-                                                    fontSize: 14,
-                                                    fontWeight: FontWeight.bold,
+                                                  Text(
+                                                    "Rp. ${gameData['gameHarga']}",
+                                                    style: const TextStyle(
+                                                      color: Colors.white,
+                                                      decoration: TextDecoration
+                                                          .lineThrough,
+                                                      decorationThickness: 3.0,
+                                                      decorationColor:
+                                                          Colors.blue,
+                                                      fontSize: 14,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                    ),
                                                   ),
-                                                ),
                                                 SizedBox(
                                                   width: 6.0,
                                                 ),
-                                                Text(
-                                                  'Rp.${DiscountCount.mathDiscount(gameData['gameHarga'], gameData['gameDiskon'])}',
-                                                  style: const TextStyle(
-                                                    color: Color.fromARGB(
-                                                        255, 255, 253, 253),
-                                                    fontSize: 15,
-                                                    decorationThickness: 3.5,
-                                                    decorationColor:
-                                                        Colors.blue,
-                                                    fontWeight: FontWeight.bold,
+                                                if (gameData['gameDiskon'] > 0)
+                                                  Container(
+                                                    padding: EdgeInsets.all(8),
+                                                    decoration: BoxDecoration(
+                                                      color: Colors.blue,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              5),
+                                                    ),
+                                                    child: Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .end, // Align to the right
+                                                      children: [
+                                                        Text(
+                                                          "-${gameData['gameDiskon']}%",
+                                                          style:
+                                                              const TextStyle(
+                                                            color: Colors.white,
+                                                            fontSize: 14,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
                                                   ),
+                                                SizedBox(width: 12),
+                                                Column(
+                                                  children: [
+                                                    if (gameData['gameDiskon'] >
+                                                        0)
+                                                      Text(
+                                                        'Rp.${gameData['gameHarga']}',
+                                                        style: const TextStyle(
+                                                          color: Color.fromARGB(
+                                                              255,
+                                                              255,
+                                                              253,
+                                                              253),
+                                                          fontSize: 15,
+                                                          decorationThickness:
+                                                              6.5,
+                                                          decorationColor:
+                                                              Color.fromARGB(
+                                                                  255,
+                                                                  9,
+                                                                  152,
+                                                                  218),
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          decoration:
+                                                              TextDecoration
+                                                                  .lineThrough,
+                                                        ),
+                                                        textAlign: TextAlign
+                                                            .right, // Align to the right
+                                                      ),
+                                                    Text(
+                                                      'Rp.${DiscountCount.mathDiscount(gameData['gameHarga'], gameData['gameDiskon'])}',
+                                                      style: TextStyle(
+                                                        fontSize: 16,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        color: const Color
+                                                            .fromARGB(
+                                                            255, 255, 255, 255),
+                                                      ),
+                                                    ),
+                                                  ],
                                                 ),
                                               ],
                                             ),
