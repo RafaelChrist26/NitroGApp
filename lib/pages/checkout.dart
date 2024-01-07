@@ -411,6 +411,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                                 height: 10.0,
                               ),
                               Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   ElevatedButton(
                                     onPressed: () {
@@ -424,7 +425,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                                       ),
                                     ),
                                     child: Container(
-                                      width: 120,
+                                      width: 285,
                                       height: 40,
                                       child: Center(
                                         child: Text(
@@ -437,31 +438,6 @@ class _CheckoutPageState extends State<CheckoutPage> {
                                     ),
                                   ),
                                   SizedBox(width: 10),
-                                  ElevatedButton(
-                                    onPressed: () {
-                                      // Logika untuk tombol kedua
-                                    },
-                                    style: ElevatedButton.styleFrom(
-                                      primary: Colors.blue,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(8.0),
-                                      ),
-                                    ),
-                                    child: Container(
-                                      width: 120,
-                                      height: 40,
-                                      child: Center(
-                                        child: Text(
-                                          'Purchase as a gift',
-                                          style: TextStyle(
-                                            fontSize: 12,
-                                            color: Colors.white,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
                                 ],
                               )
                             ],

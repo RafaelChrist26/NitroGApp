@@ -347,6 +347,10 @@ class _UploadTesState extends State<UploadTes> {
       _gameHargaController.clear();
       _gameGenreController.clear();
       _gameDiskonController.clear();
+      _gameDeveloperController.clear();
+      _gamePubliserController.clear();
+      _gameReleasedController.clear();
+      _gameDescriptionController.clear();
 
       setState(() {
         _imageUrls.clear();
