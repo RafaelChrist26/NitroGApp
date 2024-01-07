@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tugas_layout/Login/Auth/auth_service.dart';
 import 'package:tugas_layout/pages/Myprofil/accmanagement.dart';
+import 'package:tugas_layout/pages/Myprofil/Aboutus.dart';
 
 class SettingPage extends StatelessWidget {
   @override
@@ -14,14 +15,10 @@ class SettingPage extends StatelessWidget {
         },
         child: Scaffold(
           appBar: AppBar(
-            title: const Text(
-              'Settings',
-              style: TextStyle(fontFamily: 'Aclonica',
-              color: Colors.white)
-            ),
+            title: const Text('Settings',
+                style: TextStyle(fontFamily: 'Aclonica', color: Colors.white)),
             leading: IconButton(
-              icon: Icon(Icons.arrow_back,
-              color: Colors.white),
+              icon: Icon(Icons.arrow_back, color: Colors.white),
               onPressed: () {
                 // Navigate back to the "Myprofile" page
                 Navigator.pushReplacementNamed(context, '/home');
@@ -80,10 +77,15 @@ class SettingPage extends StatelessWidget {
                     primary: Color.fromARGB(255, 45, 46, 46),
                   ),
                   onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => AboutUs()),
+                    );
                     // Add logic for FAQ here
                   },
                   child: Text(
-                    'FAQ',
+                    'About Us',
                     style: TextStyle(color: Colors.white),
                   ),
                 ),
