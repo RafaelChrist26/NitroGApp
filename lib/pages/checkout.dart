@@ -275,6 +275,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                                             ),
                                             Row(
                                               children: [
+                                                if (gameData['gameDiskon'] < 0)
                                                 Text(
                                                   "Rp. ${gameData['gameHarga']}",
                                                   style: const TextStyle(
