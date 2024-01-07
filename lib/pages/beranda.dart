@@ -231,14 +231,14 @@ class _berandakuState extends State<berandaku> {
                                 // Ikon di bawah teks dengan margin
                                 Container(
                                   margin:
-                                      EdgeInsets.symmetric(horizontal: 15.0),
+                                      EdgeInsets.symmetric(horizontal: 13.0),
                                   child: Align(
                                     alignment: Alignment.centerRight,
                                     child: Icon(
                                       Icons.open_in_new,
                                       color: const Color.fromARGB(
                                           255, 202, 201, 201),
-                                      size: 20.0,
+                                      size: 15.0,
                                     ),
                                   ),
                                 ),
@@ -382,7 +382,7 @@ class _berandakuState extends State<berandaku> {
                                   child: Icon(
                                     Icons.open_in_new,
                                     color: Color.fromARGB(255, 202, 201, 201),
-                                    size: 20.0,
+                                    size: 15.0,
                                   ),
                                 ),
                               ),
@@ -538,7 +538,7 @@ class _berandakuState extends State<berandaku> {
                                     Icons.open_in_new,
                                     color: const Color.fromARGB(
                                         255, 202, 201, 201),
-                                    size: 20.0,
+                                    size: 15.0,
                                   ),
                                 ),
                               ),
@@ -745,7 +745,7 @@ class _berandakuState extends State<berandaku> {
                                   constraints: BoxConstraints.tightFor(
                                       width: 120,
                                       height:
-                                          38), // Atur lebar dan tinggi sesuai kebutuhan
+                                          33), // Atur lebar dan tinggi sesuai kebutuhan
                                   child: ElevatedButton(
                                     onPressed: () {
                                       // Tindakan yang ingin Anda lakukan saat tombol "Chat" ditekan
@@ -876,7 +876,7 @@ class _berandakuState extends State<berandaku> {
                                   constraints: BoxConstraints.tightFor(
                                       width: 120,
                                       height:
-                                          38), // Atur lebar dan tinggi sesuai kebutuhan
+                                          35), // Atur lebar dan tinggi sesuai kebutuhan
                                   child: ElevatedButton(
                                     onPressed: () {
                                       // Tindakan yang ingin Anda lakukan saat tombol "Chat" ditekan
@@ -1364,7 +1364,7 @@ class _berandakuState extends State<berandaku> {
                                   constraints: BoxConstraints.tightFor(
                                       width: 120,
                                       height:
-                                          38), // Atur lebar dan tinggi sesuai kebutuhan
+                                          35), // Atur lebar dan tinggi sesuai kebutuhan
                                   child: ElevatedButton(
                                     onPressed: () {
                                       // Tindakan yang ingin Anda lakukan saat tombol "Chat" ditekan
@@ -1553,7 +1553,7 @@ class _berandakuState extends State<berandaku> {
                                     Text(
                                       "Nekopara Deluxe Edition",
                                       style: TextStyle(
-                                          fontSize: 14.0,
+                                          fontSize: 13.0,
                                           color: Colors.white,
                                           fontWeight: FontWeight.bold),
                                     ),
@@ -1745,7 +1745,7 @@ class _berandakuState extends State<berandaku> {
                                     Text(
                                       "Nekopara Deluxe Edition",
                                       style: TextStyle(
-                                          fontSize: 14.0,
+                                          fontSize: 13.0,
                                           color: Colors.white,
                                           fontWeight: FontWeight.bold),
                                     ),
@@ -1937,7 +1937,7 @@ class _berandakuState extends State<berandaku> {
                                     Text(
                                       "Nekopara Deluxe Edition",
                                       style: TextStyle(
-                                          fontSize: 14.0,
+                                          fontSize: 13.0,
                                           color: Colors.white,
                                           fontWeight: FontWeight.bold),
                                     ),
