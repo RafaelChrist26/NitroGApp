@@ -85,37 +85,36 @@ class _CheckoutPageState extends State<CheckoutPage> {
   }
 
   Future<void> _removeFromCart(String gameId) async {
-  try {
-    User? user = _auth.currentUser;
+    try {
+      User? user = _auth.currentUser;
 
-    if (user != null) {
-      String userId = user.uid;
+      if (user != null) {
+        String userId = user.uid;
 
-      // Get the reference to the document in the "cart" collection
-      DocumentReference cartItemRef = FirebaseFirestore.instance
-          .collection('users')
-          .doc(userId)
-          .collection('cart')
-          .doc(gameId);
+        // Get the reference to the document in the "cart" collection
+        DocumentReference cartItemRef = FirebaseFirestore.instance
+            .collection('users')
+            .doc(userId)
+            .collection('cart')
+            .doc(gameId);
 
-      // Check if the document exists before attempting to delete
-      DocumentSnapshot cartItemSnapshot = await cartItemRef.get();
-      if (cartItemSnapshot.exists) {
-        // Delete the document from the "cart" collection
-        await cartItemRef.delete();
+        // Check if the document exists before attempting to delete
+        DocumentSnapshot cartItemSnapshot = await cartItemRef.get();
+        if (cartItemSnapshot.exists) {
+          // Delete the document from the "cart" collection
+          await cartItemRef.delete();
 
-        print('Item removed from cart successfully!');
+          print('Item removed from cart successfully!');
+        } else {
+          print('Item not found in the cart for gameId: $gameId');
+        }
       } else {
-        print('Item not found in the cart for gameId: $gameId');
+        print('User not logged in or gameId is null');
       }
-    } else {
-      print('User not logged in or gameId is null');
+    } catch (e) {
+      print('Error removing item from cart: $e');
     }
-  } catch (e) {
-    print('Error removing item from cart: $e');
   }
-}
-
 
   Future<void> _moveCartToPurchase() async {
     try {
@@ -237,7 +236,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         Image.network(
-                                          gameData['os'],
+                                          gameData['os'][0],
                                           color: Colors.white,
                                           width: 22,
                                           height: 22,
@@ -256,8 +255,8 @@ class _CheckoutPageState extends State<CheckoutPage> {
                                                 if (purchase['gameId'] !=
                                                     null) {
                                                   await _removeFromCart(
-                                                      purchase['gameId'],
-                                                      );
+                                                    purchase['gameId'],
+                                                  );
 
                                                   setState(() {});
                                                 }
@@ -406,6 +405,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                                 height: 10.0,
                               ),
                               Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   ElevatedButton(
                                     onPressed: () {
@@ -419,7 +419,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                                       ),
                                     ),
                                     child: Container(
-                                      width: 120,
+                                      width: 285,
                                       height: 40,
                                       child: Center(
                                         child: Text(
@@ -432,31 +432,6 @@ class _CheckoutPageState extends State<CheckoutPage> {
                                     ),
                                   ),
                                   SizedBox(width: 10),
-                                  ElevatedButton(
-                                    onPressed: () {
-                                      // Logika untuk tombol kedua
-                                    },
-                                    style: ElevatedButton.styleFrom(
-                                      primary: Colors.blue,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(8.0),
-                                      ),
-                                    ),
-                                    child: Container(
-                                      width: 120,
-                                      height: 40,
-                                      child: Center(
-                                        child: Text(
-                                          'Purchase as a gift',
-                                          style: TextStyle(
-                                            fontSize: 12,
-                                            color: Colors.white,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
                                 ],
                               )
                             ],

@@ -3,6 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'dart:ui';
 
+
+final FirebaseAuth _auth = FirebaseAuth.instance;
 class Myprofile extends StatefulWidget {
   const Myprofile({Key? key});
 
@@ -90,6 +92,31 @@ class _MyprofileState extends State<Myprofile> {
       },
       onError: (e) => print("Error getting document: $e"),
     );
+  }
+  Future<int> getGamesItemCount() async {
+    try {
+      User? user = _auth.currentUser;
+      if (user != null) {
+        String userId = user.uid;
+
+        // Ganti 'users' dengan nama koleksi yang sesuai di Firestore
+        QuerySnapshot purchaseSnapshot = await FirebaseFirestore.instance
+            .collection('users')
+            .doc(userId)
+            .collection('purchases')
+            .get();
+
+        return purchaseSnapshot.docs.length;
+      } else {
+        // Handle jika user null
+        print('Error: User not logged in');
+        return 0;
+      }
+    } catch (e) {
+      // Handle kesalahan jika terjadi
+      print('Error counting cart items: $e');
+      return 0;
+    }
   }
 
   Widget build(BuildContext context) {
@@ -230,98 +257,113 @@ class _MyprofileState extends State<Myprofile> {
               ),
             ),
             SizedBox(height: 0),
-        Positioned(
-          top: 375,
-          child: Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center, // Pusatkan teks
-                children: [
-                  Image.asset(
-                    "lib/icons/console.png",
-                    width: 20,
-                    height: 20,
-                    color: Colors.white,
-                  ),
-                  SizedBox(width: 12),
-                  Text(
-                    '999',
-                    style: TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.bold,
+      Positioned(
+      top: 375,
+      child: Column(
+        children: [
+          FutureBuilder<int>(
+            future: getGamesItemCount(),
+            builder: (context, snapshot) {
+              int itemCount = snapshot.data ?? 0;
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                // Jika future sedang dalam proses, tampilkan indikator loading atau pesan lain
+                return CircularProgressIndicator();
+              } else if (snapshot.hasError) {
+                // Jika terjadi kesalahan saat mendapatkan data, tampilkan pesan kesalahan
+                return Text('Error: ${snapshot.error}');
+              } else {
+                // Jika data berhasil diambil, tampilkan tampilan yang sesuai
+                return Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset(
+                      "lib/icons/console.png",
+                      width: 20,
+                      height: 20,
                       color: Colors.white,
                     ),
-                  ),
-                  SizedBox(width: 6),
-                  Text(
-                    'Games',
-                    style: TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.normal,
-                      color: const Color.fromARGB(255, 145, 144, 144),
+                    SizedBox(width: 12),
+                    Text(
+                      itemCount.toString(),
+                      style: TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
                     ),
-                  ),
-                  SizedBox(width: 15),
-                  Row(
-                    children: [
-                      Image.asset(
-                        "lib/icons/friends.png",
-                        width: 20,
-                        height: 20,
-                        color: Colors.white,
+                    SizedBox(width: 6),
+                    Text(
+                      'Games',
+                      style: TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.normal,
+                        color: const Color.fromARGB(255, 145, 144, 144),
                       ),
-                      SizedBox(width: 12),
-                      Text(
-                        '18+',
-                        style: TextStyle(
-                          fontSize: 12.0,
-                          fontWeight: FontWeight.bold,
+                    ),
+                    SizedBox(width: 15),
+                    Row(
+                      children: [
+                        Image.asset(
+                          "lib/icons/friends.png",
+                          width: 20,
+                          height: 20,
                           color: Colors.white,
                         ),
-                      ),
-                      SizedBox(width: 6),
-                      Text(
-                        'Friends',
-                        style: TextStyle(
-                          fontSize: 12.0,
-                          fontWeight: FontWeight.normal,
-                          color: const Color.fromARGB(255, 145, 144, 144),
+                        SizedBox(width: 12),
+                        Text(
+                          '99',
+                          style: TextStyle(
+                            fontSize: 12.0,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
                         ),
-                      ),
-                      SizedBox(
-                          width:
-                              15), // Jarak antara "Friends" dan "Years with Ubihard"
-                      Image.asset(
-                        "lib/icons/friends.png",
-                        width: 20,
-                        height: 20,
-                        color: Colors.white,
-                      ),
-                      SizedBox(width: 12),
-                      Text(
-                        '1',
-                        style: TextStyle(
-                          fontSize: 12.0,
-                          fontWeight: FontWeight.bold,
+                        SizedBox(width: 6),
+                        Text(
+                          'Friends',
+                          style: TextStyle(
+                            fontSize: 12.0,
+                            fontWeight: FontWeight.normal,
+                            color: const Color.fromARGB(255, 145, 144, 144),
+                          ),
+                        ),
+                        SizedBox(
+                          width: 15,
+                        ),
+                        Image.asset(
+                          "lib/icons/friends.png",
+                          width: 20,
+                          height: 20,
                           color: Colors.white,
                         ),
-                      ),
-                      SizedBox(width: 6),
-                      Text(
-                        'Years with Ubihard',
-                        style: TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.normal,
-                          color: const Color.fromARGB(255, 145, 144, 144),
+                        SizedBox(width: 12),
+                        Text(
+                          '1',
+                          style: TextStyle(
+                            fontSize: 12.0,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ],
+                        SizedBox(width: 6),
+                        Text(
+                          'Years with Ubihard',
+                          style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.normal,
+                            color: const Color.fromARGB(255, 145, 144, 144),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                );
+              }
+            },
           ),
-        ),
+        ],
+      ),
+    ),
           ],
         ),
         

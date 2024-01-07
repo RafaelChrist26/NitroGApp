@@ -21,7 +21,7 @@ class _MystoreState extends State<Mystore> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
-            "SPECIAL OFFERS",
+            "Special Offers",
             style: TextStyle(
               color: Colors.white,
               fontSize: MediaQuery.of(context).size.width > 600 ? 24.0 : 17.0,
@@ -137,7 +137,8 @@ class _MystoreState extends State<Mystore> {
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,
                                             children: [
-                                              if (product['gameDiskon'] > 0)
+
+                                               if (product['gameDiskon'] != null && product['gameDiskon'] > 0) // Check if there is a discount
                                               Text(
                                                 'Rp.${product['gameHarga']}',
                                                 style: const TextStyle(
