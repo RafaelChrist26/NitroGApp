@@ -312,17 +312,23 @@ class _CheckoutPageState extends State<CheckoutPage> {
                                     const SizedBox(height: 10),
                                     Row(
                                       children: [
-                                        Text(
-                                          gameData['gameTitle'],
-                                          style: TextStyle(
-                                            fontSize: MediaQuery.of(context)
-                                                        .size
-                                                        .width >
-                                                    600
-                                                ? 18
-                                                : 15,
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.bold,
+                                        Expanded(
+                                          child: Text(
+                                            gameData['gameTitle'],
+                                            style: TextStyle(
+                                              fontSize: MediaQuery.of(context)
+                                                          .size
+                                                          .width >
+                                                      600
+                                                  ? 18
+                                                  : 15,
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                            maxLines:
+                                                2, // Set the maximum number of lines
+                                            overflow: TextOverflow
+                                                .ellipsis, // Use ellipsis for overflow
                                           ),
                                         ),
                                       ],

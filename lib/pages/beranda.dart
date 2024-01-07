@@ -213,7 +213,8 @@ class _berandakuState extends State<berandaku> {
                                     "ASSASSIN’S CREED® MIRAGE",
                                     style: TextStyle(
                                       fontSize: 18.0 *
-                                          MediaQuery.of(context).textScaleFactor,
+                                          MediaQuery.of(context)
+                                              .textScaleFactor,
                                       color: Color.fromARGB(255, 180, 179, 179),
                                       fontWeight: FontWeight.bold,
                                     ),
@@ -229,7 +230,8 @@ class _berandakuState extends State<berandaku> {
                                 ),
                                 // Ikon di bawah teks dengan margin
                                 Container(
-                                  margin: EdgeInsets.symmetric(horizontal: 15.0),
+                                  margin:
+                                      EdgeInsets.symmetric(horizontal: 15.0),
                                   child: Align(
                                     alignment: Alignment.centerRight,
                                     child: Icon(
@@ -534,8 +536,8 @@ class _berandakuState extends State<berandaku> {
                                       .centerRight, // Mengatur ikon menjadi rata kanan
                                   child: Icon(
                                     Icons.open_in_new,
-                                    color:
-                                        const Color.fromARGB(255, 202, 201, 201),
+                                    color: const Color.fromARGB(
+                                        255, 202, 201, 201),
                                     size: 20.0,
                                   ),
                                 ),
@@ -642,7 +644,6 @@ class _berandakuState extends State<berandaku> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                
               ],
             ),
           ),
@@ -963,7 +964,6 @@ class _berandakuState extends State<berandaku> {
                               Container(
                                 padding: EdgeInsets.all(9.0),
                                 child: const Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Center(
                                       child: Text(
@@ -1057,127 +1057,116 @@ class _berandakuState extends State<berandaku> {
                     SizedBox(width: 8),
 
                     //Elemen kedua
-
-                    Expanded(
-                      child: Card(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                        ),
-                        clipBehavior: Clip.antiAlias,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                              colors: [
-                                const Color.fromARGB(255, 28, 74, 112),
-                                Color.fromARGB(255, 48, 3, 3),
-                              ],
-                              begin: Alignment.centerLeft,
-                              end: Alignment.centerRight,
-                            ),
+                  ],
+                ),
+              ),
+              Container(
+                child: Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                  ),
+                  clipBehavior: Clip.antiAlias,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [
+                          const Color.fromARGB(255, 28, 74, 112),
+                          Color.fromARGB(255, 48, 3, 3),
+                        ],
+                        begin: Alignment.centerLeft,
+                        end: Alignment.centerRight,
+                      ),
+                    ),
+                    child: Column(
+                      children: [
+                        // Gambar di atas
+                        Container(
+                          decoration: BoxDecoration(),
+                          child: Image(
+                            image: AssetImage('lib/icons/widdi.png'),
+                            fit: BoxFit.contain,
+                            width: 80,
+                            height: 100,
                           ),
-                          child: Column(
+                        ),
+                        Container(
+                          padding: EdgeInsets.all(9.0),
+                          child: const Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              // Gambar di atas
-                              Container(
-                                decoration: BoxDecoration(),
-                                child: Image(
-                                  image: AssetImage('lib/icons/widdi.png'),
-                                  fit: BoxFit.contain,
-                                  width:
-                                      80, // Sesuaikan ukuran gambar sesuai kebutuhan
-                                  height:
-                                      100, // Sesuaikan ukuran gambar sesuai kebutuhan
+                              Center(
+                                child: Text(
+                                  'Widdi Geming',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 16.0,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
                               ),
-                              Container(
-                                padding: EdgeInsets.all(9.0),
-                                child: const Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Center(
-                                      child: Text(
-                                        'Widdi Geming',
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 16.0,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                    ),
-
-                                    SizedBox(
-                                      height: 34.0,
-                                    ), // Jarak antara judul dan teks
-                                    Center(
-                                      child: Text(
-                                        'Played Benshin Impact',
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 16.0,
-                                          fontWeight: FontWeight.normal,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
+                              SizedBox(
+                                height: 34.0,
                               ),
-                              // Tombol "Chat" menjadi rata tengah
-                              // Tombol "Chat" dengan ikon dan ukuran yang lebih kecil
-                              // Tombol "Chat" dengan ikon
-                              SizedBox(height: 53),
-                              Container(
-                                alignment: Alignment.center,
-                                child: ConstrainedBox(
-                                  constraints: BoxConstraints.tightFor(
-                                      width: 120,
-                                      height:
-                                          38), // Atur lebar dan tinggi sesuai kebutuhan
-                                  child: ElevatedButton(
-                                    onPressed: () {
-                                      // Tindakan yang ingin Anda lakukan saat tombol "Chat" ditekan
-                                    },
-                                    style: ElevatedButton.styleFrom(
-                                        padding: EdgeInsets
-                                            .zero, // Hapus padding bawaan
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(20.0)),
-                                        ),
-                                        side: BorderSide(
-                                            width: 2,
-                                            color: Color.fromARGB(
-                                                255, 107, 107, 107)),
-                                        backgroundColor: Colors
-                                            .transparent // Atur warna garis tepi
-                                        ),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Icon(Icons.chat_bubble_outline_outlined,
-                                            size:
-                                                20), // Ikon "chat" dengan ukuran 16
-                                        SizedBox(
-                                            width:
-                                                9.0), // Jarak antara ikon dan teks
-                                        Text('Chat',
-                                            style: TextStyle(
-                                                fontSize:
-                                                    15)), // Teks "Chat" dengan ukuran 12
-                                      ],
-                                    ),
+                              Center(
+                                child: Text(
+                                  'Played Benshin Impact',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 16.0,
+                                    fontWeight: FontWeight.normal,
                                   ),
                                 ),
                               ),
                             ],
                           ),
                         ),
-                      ),
+                        SizedBox(height: 53),
+                        Container(
+                          alignment: Alignment.center,
+                          child: ConstrainedBox(
+                            constraints: BoxConstraints.tightFor(
+                                width: 120,
+                                height:
+                                    38), // Atur lebar dan tinggi sesuai kebutuhan
+                            child: ElevatedButton(
+                              onPressed: () {
+                                // Tindakan yang ingin Anda lakukan saat tombol "Chat" ditekan
+                              },
+                              style: ElevatedButton.styleFrom(
+                                  padding:
+                                      EdgeInsets.zero, // Hapus padding bawaan
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(20.0)),
+                                  ),
+                                  side: BorderSide(
+                                      width: 2,
+                                      color:
+                                          Color.fromARGB(255, 107, 107, 107)),
+                                  backgroundColor: Colors
+                                      .transparent // Atur warna garis tepi
+                                  ),
+                              child: const Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(Icons.chat_bubble_outline_outlined,
+                                      size: 20), // Ikon "chat" dengan ukuran 16
+                                  SizedBox(
+                                      width: 9.0), // Jarak antara ikon dan teks
+                                  Text('Chat',
+                                      style: TextStyle(
+                                          fontSize:
+                                              15)), // Teks "Chat" dengan ukuran 12
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                  ],
+                  ),
                 ),
               ),
-
               // Elemen ketiga
 
               Padding(
@@ -1436,7 +1425,6 @@ class _berandakuState extends State<berandaku> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                
               ],
             ),
           ),
@@ -1552,20 +1540,20 @@ class _berandakuState extends State<berandaku> {
                                       width:
                                           20, // Atur lebar gambar sesuai kebutuhan Anda
                                       height:
-                                          10, // Atur tinggi gambar sesuai kebutuhan Anda
+                                          20, // Atur tinggi gambar sesuai kebutuhan Anda
                                     ),
                                     SizedBox(width: 10),
                                     Text(
                                       "Started a new game : ",
                                       style: TextStyle(
-                                        fontSize: 15.0,
+                                        fontSize: 14.0,
                                         color: Colors.white,
                                       ),
                                     ),
                                     Text(
                                       "Nekopara Deluxe Edition",
                                       style: TextStyle(
-                                          fontSize: 15.0,
+                                          fontSize: 14.0,
                                           color: Colors.white,
                                           fontWeight: FontWeight.bold),
                                     ),
@@ -1578,7 +1566,7 @@ class _berandakuState extends State<berandaku> {
                       ),
 
                       // Kolom 3: Gambar
-                      SizedBox(height: 30),
+                      SizedBox(height: 10),
                       Container(
                         width: double.infinity,
                         margin: EdgeInsets.all(1.0),
@@ -1594,7 +1582,6 @@ class _berandakuState extends State<berandaku> {
                       ),
                       // Kolom 4: Tombol Like
                       Container(
-                        width: 100,
                         margin: EdgeInsets.only(left: 7),
                         child: ElevatedButton(
                           onPressed: () {
@@ -1624,7 +1611,6 @@ class _berandakuState extends State<berandaku> {
                                     ? Colors.white
                                     : Colors.blue,
                               ),
-
                               SizedBox(
                                   width:
                                       5), // Menambahkan jarak horizontal antara ikon dan teks
@@ -1664,15 +1650,15 @@ class _berandakuState extends State<berandaku> {
                         padding: EdgeInsets.only(top: 12.5),
                         margin: EdgeInsets.symmetric(vertical: 6.0),
                         child: ListTile(
-                          leading: const CircleAvatar(
+                          leading: CircleAvatar(
                             maxRadius: 30,
-                            backgroundColor: Color.fromARGB(255, 211, 210, 207),
-                            backgroundImage:
-                                AssetImage("lib/icons/ghozyan.png"),
+                            backgroundColor:
+                                const Color.fromARGB(255, 211, 210, 207),
+                            backgroundImage: AssetImage("lib/icons/radit.png"),
                           ),
                           title: RichText(
-                            text: const TextSpan(
-                              text: 'Ghozyan Hilman',
+                            text: TextSpan(
+                              text: 'Raditya Adi',
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize:
@@ -1691,7 +1677,7 @@ class _berandakuState extends State<berandaku> {
                                 Row(
                                   children: [
                                     Text(
-                                      "Farcry 5 Kuyha Edition",
+                                      "Nekopara Deluxe Edition",
                                       style: TextStyle(
                                         color: Colors
                                             .white, // Atur warna teks subtitle sesuai kebutuhan Anda
@@ -1707,7 +1693,7 @@ class _berandakuState extends State<berandaku> {
                                         width:
                                             1), // Jarak horizontal tambahan jika diperlukan
                                     Text(
-                                      "November 2",
+                                      "October 24",
                                       style: TextStyle(
                                         color: Color.fromARGB(255, 173, 173,
                                             173), // Atur warna teks subtitle sesuai kebutuhan Anda
@@ -1729,14 +1715,14 @@ class _berandakuState extends State<berandaku> {
                             SizedBox(height: 15),
 
                             Divider(
-                              color: const Color.fromARGB(255, 126, 125, 125),
+                              color: Color.fromARGB(255, 5, 4, 4),
                               thickness: 1.0, // Ketebalan garis putih
                               height: 1.0, // Sesuaikan dengan kebutuhan Anda
                             ),
                             SizedBox(height: 30), // Menambahkan jarak vertikal
 
                             Container(
-                              margin: EdgeInsets.symmetric(horizontal: 25.0),
+                              margin: EdgeInsets.symmetric(horizontal: 22.0),
                               child: Center(
                                 child: Row(
                                   children: [
@@ -1752,14 +1738,14 @@ class _berandakuState extends State<berandaku> {
                                     Text(
                                       "Started a new game : ",
                                       style: TextStyle(
-                                        fontSize: 15.0,
+                                        fontSize: 14.0,
                                         color: Colors.white,
                                       ),
                                     ),
                                     Text(
-                                      "Farcry 5 Kuyha Edition",
+                                      "Nekopara Deluxe Edition",
                                       style: TextStyle(
-                                          fontSize: 15.0,
+                                          fontSize: 14.0,
                                           color: Colors.white,
                                           fontWeight: FontWeight.bold),
                                     ),
@@ -1772,14 +1758,14 @@ class _berandakuState extends State<berandaku> {
                       ),
 
                       // Kolom 3: Gambar
-                      SizedBox(height: 30),
+                      SizedBox(height: 10),
                       Container(
                         width: double.infinity,
                         margin: EdgeInsets.all(1.0),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(1.0),
                           image: DecorationImage(
-                            image: AssetImage("lib/icons/feed2.jpg"),
+                            image: AssetImage("lib/icons/feed1.jpeg"),
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -1788,7 +1774,6 @@ class _berandakuState extends State<berandaku> {
                       ),
                       // Kolom 4: Tombol Like
                       Container(
-                        width: 100,
                         margin: EdgeInsets.only(left: 7),
                         child: ElevatedButton(
                           onPressed: () {
@@ -1818,7 +1803,6 @@ class _berandakuState extends State<berandaku> {
                                     ? Colors.white
                                     : Colors.blue,
                               ),
-
                               SizedBox(
                                   width:
                                       5), // Menambahkan jarak horizontal antara ikon dan teks
@@ -1862,11 +1846,11 @@ class _berandakuState extends State<berandaku> {
                             maxRadius: 30,
                             backgroundColor:
                                 const Color.fromARGB(255, 211, 210, 207),
-                            backgroundImage: AssetImage("lib/icons/widdi.png"),
+                            backgroundImage: AssetImage("lib/icons/radit.png"),
                           ),
                           title: RichText(
                             text: TextSpan(
-                              text: 'Widdi Geming',
+                              text: 'Raditya Adi',
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize:
@@ -1878,14 +1862,14 @@ class _berandakuState extends State<berandaku> {
                           ),
                           subtitle: Container(
                             padding: EdgeInsets.only(top: 5),
-                            child: Column(
+                            child: const Column(
                               // Mengganti Row dengan Column
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Row(
                                   children: [
                                     Text(
-                                      "Marvel Spider-Man PC Edition",
+                                      "Nekopara Deluxe Edition",
                                       style: TextStyle(
                                         color: Colors
                                             .white, // Atur warna teks subtitle sesuai kebutuhan Anda
@@ -1901,7 +1885,7 @@ class _berandakuState extends State<berandaku> {
                                         width:
                                             1), // Jarak horizontal tambahan jika diperlukan
                                     Text(
-                                      "November 22",
+                                      "October 24",
                                       style: TextStyle(
                                         color: Color.fromARGB(255, 173, 173,
                                             173), // Atur warna teks subtitle sesuai kebutuhan Anda
@@ -1923,14 +1907,14 @@ class _berandakuState extends State<berandaku> {
                             SizedBox(height: 15),
 
                             Divider(
-                              color: const Color.fromARGB(255, 126, 125, 125),
+                              color: Color.fromARGB(255, 5, 4, 4),
                               thickness: 1.0, // Ketebalan garis putih
                               height: 1.0, // Sesuaikan dengan kebutuhan Anda
                             ),
                             SizedBox(height: 30), // Menambahkan jarak vertikal
 
                             Container(
-                              margin: EdgeInsets.symmetric(horizontal: 15.5),
+                              margin: EdgeInsets.symmetric(horizontal: 22.0),
                               child: Center(
                                 child: Row(
                                   children: [
@@ -1946,14 +1930,14 @@ class _berandakuState extends State<berandaku> {
                                     Text(
                                       "Started a new game : ",
                                       style: TextStyle(
-                                        fontSize: 13.5,
+                                        fontSize: 14.0,
                                         color: Colors.white,
                                       ),
                                     ),
                                     Text(
-                                      "Marvel Spider-Man PC Edition",
+                                      "Nekopara Deluxe Edition",
                                       style: TextStyle(
-                                          fontSize: 14,
+                                          fontSize: 14.0,
                                           color: Colors.white,
                                           fontWeight: FontWeight.bold),
                                     ),
@@ -1966,14 +1950,14 @@ class _berandakuState extends State<berandaku> {
                       ),
 
                       // Kolom 3: Gambar
-                      SizedBox(height: 30),
+                      SizedBox(height: 10),
                       Container(
                         width: double.infinity,
                         margin: EdgeInsets.all(1.0),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(1.0),
                           image: DecorationImage(
-                            image: AssetImage("lib/icons/feed3.jpg"),
+                            image: AssetImage("lib/icons/feed1.jpeg"),
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -1982,7 +1966,6 @@ class _berandakuState extends State<berandaku> {
                       ),
                       // Kolom 4: Tombol Like
                       Container(
-                        width: 100,
                         margin: EdgeInsets.only(left: 7),
                         child: ElevatedButton(
                           onPressed: () {
@@ -2012,7 +1995,6 @@ class _berandakuState extends State<berandaku> {
                                     ? Colors.white
                                     : Colors.blue,
                               ),
-
                               SizedBox(
                                   width:
                                       5), // Menambahkan jarak horizontal antara ikon dan teks
@@ -2048,11 +2030,13 @@ Future<void> _launchUrl() async {
 }
 
 Future<void> _launchassassin() async {
-  final Uri _url = Uri.parse('https://www.ubisoft.com/en-us/game/assassins-creed/mirage');
+  final Uri _url =
+      Uri.parse('https://www.ubisoft.com/en-us/game/assassins-creed/mirage');
   if (!await launchUrl(_url)) {
     throw Exception('Could not launch $_url');
   }
 }
+
 Future<void> _launchhogwarts() async {
   final Uri _url = Uri.parse('https://www.hogwartslegacy.com/en-us');
   if (!await launchUrl(_url)) {
