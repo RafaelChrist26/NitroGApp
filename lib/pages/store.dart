@@ -137,6 +137,7 @@ class _MystoreState extends State<Mystore> {
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,
                                             children: [
+                                              if (product['gameDiskon'] > 0)
                                               Text(
                                                 'Rp.${product['gameHarga']}',
                                                 style: const TextStyle(
@@ -154,7 +155,25 @@ class _MystoreState extends State<Mystore> {
                                                 textAlign: TextAlign
                                                     .right, // Align to the right
                                               ),
+                                              if (product['gameDiskon'] < 0)
                                               Text(
+                                                'Rp.${product['gameHarga']}',
+                                                style: const TextStyle(
+                                                  color: Color.fromARGB(
+                                                      255, 255, 253, 253),
+                                                  fontSize: 15,
+                                                  decorationThickness: 6.5,
+                                                  decorationColor:
+                                                      Color.fromARGB(
+                                                          255, 9, 152, 218),
+                                                  fontWeight: FontWeight.bold,
+                                                  
+                                                ),
+                                                textAlign: TextAlign
+                                                    .right, // Align to the right
+                                              ),
+                                              Text(
+                                                
                                                 'Rp.${DiscountCount.mathDiscount(product['gameHarga'], product['gameDiskon'])}',
                                                 style: const TextStyle(
                                                   color: Color.fromARGB(
